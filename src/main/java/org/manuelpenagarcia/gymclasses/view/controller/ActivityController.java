@@ -2,6 +2,8 @@ package org.manuelpenagarcia.gymclasses.view.controller;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.manuelpenagarcia.gymclasses.service.ActivityService;
 import org.manuelpenagarcia.gymclasses.view.dto.ActivityDTO;
 import org.manuelpenagarcia.gymclasses.view.dto.ReducedActivityDTO;
@@ -22,21 +24,25 @@ public class ActivityController {
 	private ActivityService activityService;
 	
 	@GetMapping("/findAll")
+	@RolesAllowed({"Gym-admin", "Gym-user"})
 	public List<ReducedActivityDTO> findAll(){
 		return this.activityService.findAllActivities();
 	}
 	
 	@GetMapping("/get/{activityId}")
+	@RolesAllowed({"Gym-admin", "Gym-user"})
 	public ActivityDTO getActivityById(@PathVariable("activityId") Long activityId) {
 		return this.activityService.getActivityById(activityId);
 	}
 	
 	@PostMapping("/save")
+	@RolesAllowed("Gym-admin")
 	public ActivityDTO save(@RequestBody ActivityDTO activity) {
 		return this.activityService.saveActivity(activity);
 	}
 	
 	@DeleteMapping("/delete/{activityId}")
+	@RolesAllowed("Gym-admin")
 	public void delete(@PathVariable("activityId") Long activityId) {
 		this.activityService.deleteActivity(activityId);
 	}

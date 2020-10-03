@@ -2,6 +2,8 @@ package org.manuelpenagarcia.gymclasses.view.controller;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.manuelpenagarcia.gymclasses.service.MemberService;
 import org.manuelpenagarcia.gymclasses.view.dto.MemberDTO;
 import org.manuelpenagarcia.gymclasses.view.dto.ReducedMemberDTO;
@@ -23,26 +25,31 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@GetMapping("/findAll")
+	@RolesAllowed("Gym-admin")
 	public List<ReducedMemberDTO> findAll(){
 		return this.memberService.findAllMembers();
 	}
 	
 	@GetMapping("/get/{memberId}")
+	@RolesAllowed("Gym-admin")
 	public MemberDTO getMemberById(@PathVariable("memberId") Long memberId) {
 		return this.memberService.getMemberById(memberId);
 	}
 	
 	@PostMapping("/save")
+	@RolesAllowed("Gym-admin")
 	public MemberDTO save(@RequestBody MemberDTO member) {
 		return this.memberService.saveMember(member);
 	}
 	
 	@DeleteMapping("/delete/{memberId}")
+	@RolesAllowed("Gym-admin")
 	public void delete(@PathVariable("memberId") Long memberId) {
 		this.memberService.deleteMember(memberId);
 	}
 	
 	@PutMapping("/addToActivity/{memberId}/{activityId}")
+	@RolesAllowed("Gym-admin")
 	public void addMemberToActivity(@PathVariable("memberId") Long memberId, @PathVariable("activityId") Long activityId) {
 		this.memberService.addMemberToActivity(memberId, activityId);
 	}
